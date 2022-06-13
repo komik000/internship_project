@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
 import '/data/character_api.dart';
-import '/model/character.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Gallery extends StatefulWidget {
   const Gallery({Key? key}) : super(key: key);
@@ -23,8 +21,6 @@ class _GalleryState extends State<Gallery> {
       setState(() {
         Iterable list = json.decode(response.body);
         characterList = list.map((model) => CharacterImage.fromJson(model)).toList();
-        print(characterList[0].url);
-        print(11);
       });
     });
   }
@@ -74,7 +70,7 @@ class _GalleryState extends State<Gallery> {
                 padding: const EdgeInsets.all(6.0),
                 child: Center(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage('https://images.unsplash.com/photo-1574343062782-e0251cf2589c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwdHJlZXxlbnwwfHwwfHw%3D&w=1000&q=80')
                         ),
@@ -98,7 +94,7 @@ class _GalleryState extends State<Gallery> {
           );
         },
         ),
-        bottomNavigationBar: _createBottomNavigationBar(),
+        // bottomNavigationBar: _createBottomNavigationBar(),
 
       ),
 

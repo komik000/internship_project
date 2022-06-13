@@ -101,7 +101,7 @@ class _PostState extends State<Post> {
             );
           },
           ),
-          bottomNavigationBar: _createBottomNavigationBar(),
+          // bottomNavigationBar: _createBottomNavigationBar(),
 
         ),
 
