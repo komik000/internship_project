@@ -4,7 +4,6 @@ import '/pages/Post.dart';
 import '/pages/gallery.dart';
 import '/pages/contacts.dart';
 import '/pages/check.dart';
-import 'dart:convert';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -33,6 +32,15 @@ class _ProfileState extends State<Profile> {
     Colors.white10,
   ];
 
+  int _selectedIndex = 0;
+
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,58 +55,126 @@ class _ProfileState extends State<Profile> {
             tileMode: TileMode.clamp,
           ),
         ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-          onTap: onTapped,
-          currentIndex: currentTabIndex,
-          items: [
-            BottomNavigationBarItem(
-              // backgroundColor: currentTabIndex == 1 ? colors[0] : colors[1],
-              icon: Column(
-                children: [
-                  SvgPicture.asset("icons/home.svg"),
-                  const Text(
-                    'News',
-                  ),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0,16,0,0),
+          child: BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            type: BottomNavigationBarType.fixed,
+            elevation: 0,
+            onTap: onTapped,
+            currentIndex: currentTabIndex,
+            // selectedItemColor: Colors.amber[800],
+            items: [
+              BottomNavigationBarItem(
+                // backgroundColor: currentTabIndex == 1 ? colors[0] : colors[1],
+                icon: Column(
+                  children: [
+                    SvgPicture.asset("icons/home.svg",height: 12.75,width: 15,),
+                    const Text(
+                      'News',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                activeIcon: Column(
+                  children: [
+                    SvgPicture.asset("icons/home.svg",height: 12.75,width: 15,color: Colors.blue,),
+                    const Text(
+                      'News',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                label : '',
               ),
-              label : '',
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: currentTabIndex == 2 ? colors[0] : colors[1],
-              icon: Column(
-                children: [
-                  SvgPicture.asset("icons/Vector.svg"),
-                  const Text(
-                    'Gallery',
-                  ),
-                ],
+              BottomNavigationBarItem(
+                backgroundColor: currentTabIndex == 2 ? colors[0] : colors[1],
+                icon: Column(
+                  children: [
+                    SvgPicture.asset("icons/Vector.svg",height: 15,width: 12,),
+
+                    const Text(
+                      'Gallery',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                activeIcon: Column(
+                  children: [
+                    SvgPicture.asset(
+                      ("icons/Vector.svg"),
+                      color: Colors.blue,
+                    ),
+                    const Text(
+                      'Gallery',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                label : '',
               ),
-              label : '',
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: currentTabIndex == 3 ? colors[0] : colors[1],
-              icon: Column(
-                children: [
-                  SvgPicture.asset("icons/heart.svg"),
-                  const Text('Check'),
-                ],
+              BottomNavigationBarItem(
+                backgroundColor: currentTabIndex == 3 ? colors[0] : colors[1],
+                icon: Column(
+                  children: [
+                    SvgPicture.asset("icons/heart.svg",height: 15,width: 13.76,),
+                    const Text(
+                      'Check',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                activeIcon: Column(
+                  children: [
+                    SvgPicture.asset("icons/heart.svg",height: 15,width: 13.76,color: Colors.blue),
+                    const Text(
+                      'Check',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                label : '',
               ),
-              label : '',
-            ),
-            BottomNavigationBarItem(
-                backgroundColor: currentTabIndex == 4 ? colors[0] : colors[1],
-              icon: Column(
-                children: [
-                  SvgPicture.asset("icons/heart.svg"),
-                  const Text('Contacts'),
-                ],
+              BottomNavigationBarItem(
+                  backgroundColor: currentTabIndex == 4 ? colors[0] : colors[1],
+                icon: Column(
+                  children: [
+                    SvgPicture.asset("icons/heart.svg",height: 15,width: 13.76,),
+                    const Text(
+                      'Contacts',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                activeIcon: Column(
+                  children: [
+                    SvgPicture.asset("icons/heart.svg",height: 15,width: 13.76,color: Colors.blue),
+                    const Text(
+                      'Contacts',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                label : '',
               ),
-              label : '',
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

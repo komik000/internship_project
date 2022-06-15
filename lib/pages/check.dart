@@ -5,6 +5,8 @@ import 'package:aza/model/character_todos.dart';
 import 'package:flutter_svg/svg.dart';
 import '/data/character_api.dart';
 import '/pages/Post.dart';
+import 'package:hive/hive.dart';
+
 
 
 
@@ -18,20 +20,25 @@ class Check extends StatefulWidget {
 class _CheckState extends State<Check> {
 
   bool isChecked = false;
+  var box = Hive.box('check');
 
   final Post post = new Post();
-
+  List<bool> checkbox = [];
   List<CharacterTodos> characterList = <CharacterTodos>[];
 
   void getCharactersfromApi() async {
     CharacterApi.getCharacters4().then((response) {
       setState(() {
         Iterable list = json.decode(response.body);
-        characterList =
-            list.map((model) => CharacterTodos.fromJson(model)).toList();
+        characterList = list.map((model) => CharacterTodos.fromJson(model)).toList();
+        for(int i=0;i<characterList.length;i++){
+          checkbox.add(characterList[i].completed);
+        }
       });
     });
   }
+
+
   @override
   void initState() {
     getCharactersfromApi();
@@ -76,33 +83,44 @@ class _CheckState extends State<Check> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(32.0),
+                      padding: EdgeInsets.fromLTRB(16, (index == 0 ? 16 : 0), 16, 0),
                       child: Container(
-                        color: characterList[index].completed ? Color(0xff322C54) : Color(0xFF0F0B21),
+                        color: (box.get('list_of_check') != null ? box.get('list_of_check')[index] : checkbox[index]) ? Color(0xff322C54) : Color(0xFF0F0B21),
                         height: 64,
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              checkColor: Colors.white,
-                              fillColor: MaterialStateProperty.resolveWith(
-                                  getColor),
-                              value: characterList[index].completed,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  characterList[index].completed = value!;
-                                });
-                              },
-                            ),
-                            SizedBox(width: 40,),
-                            Text(
-                              characterList[index].title,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.3,
+                                child: Checkbox(
+                                  checkColor: Color(0xFF0F0B21),
+                                  fillColor: MaterialStateProperty.resolveWith(
+                                      getColor),
+                                  value: box.get('list_of_check') != null ? box.get('list_of_check')[index] : checkbox[index],
+                                  splashRadius: 30,
+                                  onChanged: (bool? value) {
+                                    // box.put(index,characterList);
+                                    setState(() {
+                                      checkbox[index] = value!;
+                                      box.put('list_of_check', checkbox);
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
+
+                              SizedBox(width: 46.33,),
+                              Text(
+                                characterList[index].title.length > 30 ? 'very long text' : characterList[index].title,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

@@ -1,24 +1,23 @@
-import 'package:aza/model/character_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
+import '../model/character_image.dart';
 import '/data/character_api.dart';
-import '/pages/title2.dart';
 
-class Gallery extends StatefulWidget {
-  const Gallery({Key? key}) : super(key: key);
+
+class Title2 extends StatefulWidget {
+  const Title2({Key? key}) : super(key: key);
 
   @override
-  State<Gallery> createState() => _GalleryState();
+  State<Title2> createState() => _Title2State();
 }
 
-class _GalleryState extends State<Gallery> {
+class _Title2State extends State<Title2> {
 
   List<CharacterImage> characterList = <CharacterImage>[];
 
   void getCharactersfromApi() async {
-    await CharacterApi.getCharacters3().then((response) {
+    CharacterApi.getCharacters3().then((response) {
       setState(() {
         Iterable list = json.decode(response.body);
         characterList = list.map((model) => CharacterImage.fromJson(model)).toList();
@@ -26,16 +25,17 @@ class _GalleryState extends State<Gallery> {
     });
   }
 
+
   @override
   void initState() {
     getCharactersfromApi();
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
-
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -49,7 +49,7 @@ class _GalleryState extends State<Gallery> {
         backgroundColor: const Color(0xFF0F0B21),
 
         appBar: AppBar(
-          title: const Text('Gallery'),
+          title: const Text('Title'),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -61,10 +61,9 @@ class _GalleryState extends State<Gallery> {
             ),
           ),
         ),
-
-        body:CupertinoButton(
-          child : GridView.count(
-            crossAxisCount: 2,
+        body: Container(
+            child : GridView.count(
+            crossAxisCount: 3,
 
             children: List.generate(characterList.length, (index) {
               return Padding(
@@ -82,11 +81,10 @@ class _GalleryState extends State<Gallery> {
                       padding: const EdgeInsets.all(8),
                       child: Center(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             new Text("Card title here", style: TextStyle(fontSize: 14.0,color:Colors.white,),),
-                            new Text("${characterList[index].title}", style: TextStyle(fontSize: 12.0,color:Colors.white,),),
                           ],
                         ),
                       ),
@@ -95,16 +93,10 @@ class _GalleryState extends State<Gallery> {
                 ),
               );
             }),
-          ), onPressed: () {
-          Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => Title2()),
-          );
-        },
+          ),
         ),
-        // bottomNavigationBar: _createBottomNavigationBar(),
 
       ),
-
     );
-
   }
 }

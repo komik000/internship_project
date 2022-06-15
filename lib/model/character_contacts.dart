@@ -1,33 +1,25 @@
+import 'character_contacts_address.dart';
+import 'character_contacts_company.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+
+part 'character_contacts.g.dart';
+
+@JsonSerializable()
 class CharacterContacts {
-  int id;
-  String name;
-  String username;
-  String email;
-  Map address;
-  String phone;
-  String website;
-  Map company;
+  final int id;
+  final String name;
+  final String username;
+  final String email;
+  final CharacterContacts_address address;
+  final String phone;
+  final String website;
+  final ContactsCompany company;
 
+  CharacterContacts(this.id, this.name, this.username, this.email, this.address, this.phone, this.website, this.company);
 
-  CharacterContacts.fromJson(Map json)
-      : id = json['id'],
-        name = json['name'],
-        email = json['email'],
-        address = json['address'],
-        phone = json['phone'],
-        website = json['website'],
-        company = json['company'],
-        username = json['username'];
+  factory CharacterContacts.fromJson(Map<String, dynamic> json) => _$CharacterContactsFromJson(json);
 
-  Map toJson() {
-    return {'id': id, 'name': name,email: 'email','address': address, 'phone': phone,website: 'website',
-      company : 'company', username : "username"};
-  }
+  Map<String, dynamic> toJson() => _$CharacterContactsToJson(this);
+
 }
-// String street,
-// String suite,
-// String city,
-// String zipcode,
-// LatLng geo,
-// double lat,
-// double lng,

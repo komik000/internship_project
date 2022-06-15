@@ -1,18 +1,19 @@
+import 'package:aza/model/character_contacts_address_geo.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'character_contacts_address.g.dart';
+
+@JsonSerializable()
 class CharacterContacts_address{
-  String street;
-  String suite;
-  String city;
-  String zipcode;
-  String geo;
+  final String street;
+  final String suite;
+  final String city;
+  final String zipcode;
+  final AddressGeo geo;
 
-  CharacterContacts_address.fromJson(Map json)
-      : street = json['street'],
-        suite = json['suite'],
-        city = json['city'],
-        zipcode = json['zipcode'],
-        geo = json['geo'];
+  factory CharacterContacts_address.fromJson(Map<String, dynamic> json) => _$CharacterContacts_addressFromJson(json);
 
-  Map toJson() {
-    return {'street': street, 'suite': suite,city: 'city','zipcode': zipcode, 'geo': geo};
-  }
+  CharacterContacts_address(this.street, this.suite, this.city, this.zipcode, this.geo);
+
+  Map<String, dynamic> toJson() => _$CharacterContacts_addressToJson(this);
 }

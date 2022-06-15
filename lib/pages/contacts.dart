@@ -14,16 +14,13 @@ class Contacts extends StatefulWidget {
 }
 
 class _ContactsState extends State<Contacts> {
-
   List<CharacterContacts> characterList = <CharacterContacts>[];
 
   void getCharactersfromApi() async {
     await CharacterApi.getCharacters5().then((response) {
       setState(() {
         Iterable list = json.decode(response.body);
-        characterList =
-            list.map((model) => CharacterContacts.fromJson(model)).toList();
-        print(characterList);
+        characterList = list.map((model) => CharacterContacts.fromJson(model)).toList();
       });
     });
   }
@@ -61,43 +58,42 @@ class _ContactsState extends State<Contacts> {
             ),
           ),
         ),
-        body: CupertinoButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const User()),
-            );
-          },
-          child: ListView.builder(
-              itemCount: characterList.length ,
+        body: ListView.builder(
+            itemCount: characterList.length ,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Card(
-                  color: const Color(0xFF0F0B21),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset("icons/auth.svg"),
-                          const SizedBox(width: 30.0,),
-                          Text(
-                           characterList[index].name,
-                            style: const TextStyle(
-                              color: Colors.white,
+              return CupertinoButton(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(8, (index == 0 ? 16 : 0), 8, 0),
+                  child: Card(
+                    color: Color(0xFF0F0B21),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            SvgPicture.asset("icons/auth.svg"),
+                            const SizedBox(width: 28.0,),
+                            Text(
+                             characterList[index].name,
+                              style: const TextStyle(
+                                color: Colors.white, fontSize: 16,letterSpacing: 1,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 16.0,),
-                        ],
-                      ),
-                      // const SizedBox(height: 16,),
-
-                    ],
+                            // const SizedBox(height: 16.0,),
+                          ],
+                        ),
+                        // const SizedBox(height: 16,),
+                      ],
+                    ),
                   ),
                 ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => User(characterContacts: characterList[index],),
+                  ));
+                },
               );
-            }
-          ),
+          }
         ),
         // bottomNavigationBar: _createBottomNavigationBar(),
       ),
